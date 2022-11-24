@@ -6,14 +6,28 @@ const createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
     res.status(201).json({
-      succeded: true,
-      user,
-    });
+      user:user._id
+    })
   } catch (error) {
-    res.status(500).json({
-      succeded: false,
-      error,
-    });
+
+    console.log("error",error);
+
+    let errors = {}
+
+    if(error.code === 11000 && error.keyPattern.email == 1 ){
+      errors.email = "The Email is already registered";
+    }
+    if(error.code === 11000 && error.keyPattern.username == 1 ){
+      errors.username = "The Username is already registered";
+    }
+
+    if(error.name === "ValidationError"){
+      Object.keys(error.errors).forEach((key)=> {
+        errors[key] = error.errors[key].message
+      })
+    }
+    console.log("errors2",errors);
+    res.status(400).json(errors);
   }
 };
 
