@@ -21,6 +21,10 @@ const photoSchema = new Schema({
         type:Schema.Types.ObjectId,
         //referance userModal it needs to equal model("User")
         ref:"User"
+    },
+    url:{
+        type:String,
+        required:true,
     }
 });
 

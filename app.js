@@ -6,8 +6,16 @@ import pageRoute from "./routes/pageRoute.js";
 import photoRoute from "./routes/photoRoute.js";
 import userRoute from "./routes/userRoute.js";
 import * as authMiddleware from "./middlewares/authMiddleware.js";
+import fileUpload from "express-fileupload";
+import { v2 as cloudinary } from "cloudinary";
 //We can access dotenv file
 dotenv.config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 //connection to the db
 conn();
@@ -22,10 +30,11 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
+app.use(cookieParser());
+app.use(fileUpload({ useTempFiles: true }));
 
 //routes
-app.use("*",authMiddleware.checkUser)
+app.use("*", authMiddleware.checkUser);
 app.use("/", pageRoute);
 app.use("/photos", photoRoute);
 app.use("/users", userRoute);

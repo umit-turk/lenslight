@@ -7,4 +7,6 @@ const router = express.Router();
 router.route("/register").post(userController.createUser); //localhost/users/register
 router.route("/login").post(userController.loginUser);
 router.route("/dashboard").get(authMiddleware.authenticateToken,userController.getDashboardPage);
+router.route("/").get(authMiddleware.authenticateToken,userController.getAllUsers);
+router.route("/:id").get(authMiddleware.authenticateToken,userController.getUser);
 export default router;
