@@ -80,13 +80,14 @@ const createToken = (userId) => {
 
 const getDashboardPage = async (req, res) => {
   const photos = await Photo.find({ user: res.locals.user._id });
-  const user = await User.findById({ _id: res.locals.user._id }).populate([
+  const users = await User.findById({ _id: res.locals.user._id }).populate([
     "followings",
     "followers",
   ]);
   res.render("dashboard", {
     link: "dashboard",
     photos,
+    users,
   });
 };
 
@@ -109,11 +110,18 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const user = await User.findById({ _id: req.params.id });
+
+    //compare the followers login user id
+    const inFollowers = user.followers.some((follower) => {
+      return follower.equals(res.locals.user._id);
+    });
+
     const photos = await Photo.find({ user: user._id });
     res.status(200).render("user", {
       user,
       photos,
       link: "users",
+      inFollowers,
     });
   } catch (error) {
     res.status(500).json({
@@ -141,10 +149,7 @@ const follow = async (req, res) => {
       },
       { new: true }
     );
-    res.status(200).json({
-      succeded: true,
-      user,
-    });
+    res.status(200).redirect(`/users/${req.params.id}`);
   } catch (error) {
     res.status(500).json({
       succeded: false,
@@ -171,10 +176,7 @@ const unFollow = async (req, res) => {
       },
       { new: true }
     );
-    res.status(200).json({
-      succeded: true,
-      user,
-    });
+    res.status(200).redirect(`/users/${req.params.id}`);
   } catch (error) {
     res.status(500).json({
       succeded: false,

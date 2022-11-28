@@ -8,6 +8,7 @@ import userRoute from "./routes/userRoute.js";
 import * as authMiddleware from "./middlewares/authMiddleware.js";
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from "cloudinary";
+import methodOverride from 'method-override';
 //We can access dotenv file
 dotenv.config();
 
@@ -32,6 +33,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload({ useTempFiles: true }));
+app.use(methodOverride("_method",{
+  methods:["POST","GET"],
+}))
 
 //routes
 app.use("*", authMiddleware.checkUser);

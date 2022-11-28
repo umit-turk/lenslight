@@ -22,7 +22,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="satteb text_align_center">
-                <p>fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that itfact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that itfact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that itfact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it</p>
+                <p>fact that a reader will be distracted by</p>
                 <h3>The point of using </h3>
                 <i><img src="/images/custo.jpg" alt="#"/></i>
               </div>
@@ -32,6 +32,19 @@
       </div>
       
 <!-- end customers -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text_align_center">
+        <% if(!inFollowers) { %>
+        <a style="margin: 20px auto;" class="read_more" href="/users/<%=user._id %>/follow?_method=PUT">FOLLOW</a>
+        <% }else { %>
+        <a style="margin: 20px auto;" class="read_more" href="/users/<%=user._id %>/unfollow?_method=PUT">UNFOLLOW</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!--  -->
 <div class="gallery">
@@ -39,8 +52,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="titlepage text_align_center">
-          <span>03</span>
-          <h2>Our gallery</h2>
+          <h2>My Photos</h2>
         </div>
       </div>
     </div>
@@ -66,13 +78,12 @@
           </div>
         </div>
        <% } %>
-        <div class="col-md-12">
-          <a class="plus_btn" href="gallery.html">+</a>
-        </div>
+      
       </div>
     </div>
   </div>
 </div>
+
 
       </div>
       <!-- end footer -->
