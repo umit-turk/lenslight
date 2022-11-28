@@ -19,6 +19,14 @@
                 <h3 style="font-size: 24px !important;"><%= photo.name  %> </h3>
                 <p><%= photo.description  %></p>
                 <a class="read_more" href="/users/<%= photo.user._id %>">Artist: <%= photo.user.username  %></a>
+
+                <div style="margin-top:30px">
+                  <ul style="display: flex; justify-content: space-between;">
+                    <li><a style="min-width:266px" class="read_more" href="#">Update</a></li>
+                    <li><a onclick="return confirm('Do you want to delete photo')" style="min-width:266px" class="read_more" href="/photos/<%=photo._id %>?_method=DELETE">Delete</a></li>
+                  </ul>
+                </div>
+
               </div>
             </div>
             <div class="col-md-6">
